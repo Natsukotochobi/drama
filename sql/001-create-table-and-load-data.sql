@@ -1,11 +1,13 @@
-DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS dramas;
 
-CREATE TABLE movies (
+CREATE TABLE dramas (
   id int unsigned AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
-  director VARCHAR(100) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  year VARCHAR(4),
+  priority VARCHAR(1) NOT NULL,
   PRIMARY KEY(id)
 );
 
-INSERT INTO movies (name, director) VALUES ("ショーシャンクの空に", "フランク・ダラボン");
-INSERT INTO movies (name, director) VALUES ("この世界の片隅に", "片渕須直");
+INSERT INTO dramas (title, year, priority) VALUES ("気象庁の人々", "2022", "A");
+INSERT INTO dramas (title, year, priority) VALUES ("先輩、その口紅塗らないで", "2021", "A");
+INSERT INTO dramas (title, year, priority) VALUES ("偶然見つけたハル", "2019", "C");
