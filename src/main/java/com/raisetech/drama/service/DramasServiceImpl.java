@@ -1,9 +1,8 @@
 package com.raisetech.drama.service;
 
-import com.raisetech.drama.controller.ResourceNotFoundException;
+import com.raisetech.drama.exception.ResourceNotFoundException;
 import com.raisetech.drama.entity.Drama;
 import com.raisetech.drama.mapper.DramasMapper;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

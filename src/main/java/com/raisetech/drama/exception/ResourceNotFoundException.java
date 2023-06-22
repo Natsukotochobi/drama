@@ -1,4 +1,4 @@
-package com.raisetech.drama.controller;
+package com.raisetech.drama.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException() {
