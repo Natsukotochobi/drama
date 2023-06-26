@@ -1,6 +1,6 @@
 package com.raisetech.drama.form;
 
-import com.raisetech.drama.Validation.PriorityValidation;
+import com.raisetech.drama.validation.PriorityValidation;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

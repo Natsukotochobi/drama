@@ -13,7 +13,7 @@ public interface DramasMapper {
     List<Drama> findAll();
 
     @Select("SELECT * FROM dramas WHERE priority = #{priority}")
-    List<Drama> findByLevel(String priority);
+    List<Drama> findByPriority(String priority);
 
     @Select("SELECT * FROM dramas WHERE id = #{id}")
     Optional<Drama> findById(int id);

@@ -1,4 +1,4 @@
-package com.raisetech.drama.Validation;
+package com.raisetech.drama.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

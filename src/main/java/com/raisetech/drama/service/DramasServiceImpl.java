@@ -21,7 +21,7 @@ public class DramasServiceImpl implements DramasService{
         if (Objects.isNull(priority)){
             return dramasMapper.findAll().stream().toList();
         }
-        List<Drama> dramas = dramasMapper.findByLevel(priority);
+        List<Drama> dramas = dramasMapper.findByPriority(priority);
         if (dramas.isEmpty()){
                 throw new ResourceNotFoundException("優先度" + priority + "のものはありません");
         } else {
