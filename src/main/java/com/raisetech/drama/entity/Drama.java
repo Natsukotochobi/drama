@@ -1,6 +1,10 @@
 package com.raisetech.drama.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
 @Getter
 @Setter
