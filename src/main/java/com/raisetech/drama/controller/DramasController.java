@@ -40,7 +40,7 @@ public class DramasController {
                 insertForm.getTitle(),
                 insertForm.getYear(),
                 insertForm.getPriority());
-        int newDramaId = DramasService.save(dramaDto);
+        int newDramaId = dramasService.save(dramaDto);
         URI location = UriComponentsBuilder.fromUriString("http://localohost:8080/create/" + newDramaId)
                 .build().toUri();
         return ResponseEntity.created(location).build();
