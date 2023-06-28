@@ -1,5 +1,6 @@
 package com.raisetech.drama.service;
 
+import com.raisetech.drama.dto.DramaDto;
 import com.raisetech.drama.exception.ResourceNotFoundException;
 import com.raisetech.drama.entity.Drama;
 import com.raisetech.drama.mapper.DramasMapper;
@@ -27,6 +28,11 @@ public class DramasServiceImpl implements DramasService{
         } else {
             return dramas.stream().toList();
         }
+    }
+    @Override
+    public int save(DramaDto dramaDto) {
+        dramasMapper.save(dramaDto);
+        return dramaDto.getId();
     }
 }
 
