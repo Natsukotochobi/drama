@@ -30,6 +30,10 @@ public class DramasServiceImpl implements DramasService{
         }
     }
     @Override
+    public List<Drama> getAllDramas(){
+
+    }
+    @Override
     public int save(DramaDto dramaDto) {
         dramasMapper.save(dramaDto);
         return dramaDto.getId();

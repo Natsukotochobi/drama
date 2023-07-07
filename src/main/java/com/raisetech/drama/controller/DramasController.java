@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -28,10 +31,34 @@ public class DramasController {
         this.dramasService = dramasService;
     }
 
-    @GetMapping
-    public List<Drama> getDramas(@RequestParam(value = "priority", required = false) String priority)
+//    @GetMapping
+    /*public List<Drama> getDramas(@RequestParam(value = "priority", required = false) String priority)
             throws Exception {
         return dramasService.getDramas(priority);
+    }*/
+
+    @GetMapping
+    public ResponseEntity<List<Drama>> getDramas(@RequestParam(value = "priority", required = false) String priority) {
+        if (priority != null && !isValidPriority(priority)) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<Drama> dramas;
+        if (priority != null) {
+            dramas = dramasService.getDramas(priority);
+            if (dramas.isEmpty()) {
+                return ResponseEntity.ok().body(Collections.emptyList());
+            }} else {
+            dramas = dramasService.getAllDramas();
+        }
+        return ResponseEntity.ok(dramas);
+    }
+
+    private boolean isValidPriority(String priority) {
+        List<String> validPriorities = new ArrayList<>();
+        validPriorities.add("A");
+        validPriorities.add("B");
+        validPriorities.add("C");
+        return validPriorities.contains(priority);
     }
 
     @PostMapping

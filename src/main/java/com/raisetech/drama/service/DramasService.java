@@ -9,5 +9,7 @@ import java.util.List;
 public interface DramasService {
     List<Drama> getDramas(String priority) throws Exception;
 
+    List<Drama> getAllDramas();
+
     int save(DramaDto dramaDto);
 }
