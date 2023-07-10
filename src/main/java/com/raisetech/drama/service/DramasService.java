@@ -7,7 +7,7 @@ import com.raisetech.drama.entity.Drama;
 import java.util.List;
 
 public interface DramasService {
-    List<Drama> getDramas(String priority) throws Exception;
+    List<Drama> getDramas(String priority) ;
 
     List<Drama> getAllDramas();
 

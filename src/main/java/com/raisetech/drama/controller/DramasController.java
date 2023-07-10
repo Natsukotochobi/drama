@@ -47,7 +47,8 @@ public class DramasController {
             dramas = dramasService.getDramas(priority);
             if (dramas.isEmpty()) {
                 return ResponseEntity.ok().body(Collections.emptyList());
-            }} else {
+            }
+        } else {
             dramas = dramasService.getAllDramas();
         }
         return ResponseEntity.ok(dramas);

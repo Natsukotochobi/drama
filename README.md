@@ -57,7 +57,12 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 <details>
 <summary><h4> 1-1. GET /drama?priority=○ priorityに存在しないものを指定したとき </h4></summary>
 
-![](imgs/2023-06-29-14-50-08.png)
+<h5>●指定した優先度のものがデータベースに存在しない場合</h5>
+
+![](imgs/2023-07-10-11-29-09.png)
+<h5>●ABC以外のものを指定した場合</h5>
+
+![](imgs/2023-07-10-11-30-54.png)
 </details>
 <details>
 <summary><h4> 2-1. POST /drama 新規登録</h4></summary>

@@ -17,7 +17,7 @@ public class DramasServiceImpl implements DramasService{
         this.dramasMapper = dramasMapper;
     }
 
-    @Override
+    /*@Override
     public List<Drama> getDramas(String priority) throws Exception {
         if (Objects.isNull(priority)){
             return dramasMapper.findAll().stream().toList();
@@ -28,10 +28,15 @@ public class DramasServiceImpl implements DramasService{
         } else {
             return dramas.stream().toList();
         }
+    }*/
+    @Override
+    public List<Drama> getDramas(String priority){
+        List<Drama> dramas = dramasMapper.findByPriority(priority);
+        return dramas.stream().toList();
     }
     @Override
     public List<Drama> getAllDramas(){
-
+        return dramasMapper.findAll().stream().toList();
     }
     @Override
     public int save(DramaDto dramaDto) {
