@@ -31,12 +31,6 @@ public class DramasController {
         this.dramasService = dramasService;
     }
 
-//    @GetMapping
-    /*public List<Drama> getDramas(@RequestParam(value = "priority", required = false) String priority)
-            throws Exception {
-        return dramasService.getDramas(priority);
-    }*/
-
     @GetMapping
     public ResponseEntity<List<Drama>> getDramas(@RequestParam(value = "priority", required = false) String priority) {
         if (priority != null && !isValidPriority(priority)) {
