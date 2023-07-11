@@ -60,7 +60,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
                 "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 "error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         return new ResponseEntity(body2, HttpStatus.BAD_REQUEST);
-//            return super.handleExceptionInternal(ex, "", null, HttpStatus.BAD_REQUEST, request);
         }
 
 }

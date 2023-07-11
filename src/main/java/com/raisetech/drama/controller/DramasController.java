@@ -6,7 +6,6 @@ import com.raisetech.drama.form.InsertForm;
 import com.raisetech.drama.service.DramasService;
 import com.raisetech.drama.validation.PriorityValidation;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
