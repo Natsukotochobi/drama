@@ -49,14 +49,6 @@ public class DramasController {
         return ResponseEntity.ok(dramas);
     }
 
-    /*private boolean isValidPriority(String priority) {
-        List<String> validPriorities = new ArrayList<>();
-        validPriorities.add("A");
-        validPriorities.add("B");
-        validPriorities.add("C");
-        return validPriorities.contains(priority);
-    }*/
-
     @PostMapping
     public ResponseEntity create(@Validated @RequestBody InsertForm insertForm) {
         DramaDto dramaDto = new DramaDto(
