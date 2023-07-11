@@ -55,11 +55,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(
             ConstraintViolationException ex, HttpServletRequest request) {
-        Map<String, String> body2 = Map.of(
+        Map<String, String> body = Map.of(
                 "timeStamp", ZonedDateTime.now().toString(),
                 "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 "error", HttpStatus.BAD_REQUEST.getReasonPhrase());
-        return new ResponseEntity(body2, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
         }
 
 }
