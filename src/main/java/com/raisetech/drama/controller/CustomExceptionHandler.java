@@ -2,6 +2,7 @@ package com.raisetech.drama.controller;
 
 import com.raisetech.drama.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -48,9 +49,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
                 "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "message", errors
         );
-
-
         return ResponseEntity.badRequest().body(body);
 
     }
+    @ExceptionHandler
+    public ResponseEntity<Map<String, String>> handleConstraintViolationException(
+            ConstraintViolationException ex, HttpServletRequest request) {
+        Map<String, String> body2 = Map.of(
+                "timeStamp", ZonedDateTime.now().toString(),
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                "error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return new ResponseEntity(body2, HttpStatus.BAD_REQUEST);
+//            return super.handleExceptionInternal(ex, "", null, HttpStatus.BAD_REQUEST, request);
+        }
+
 }

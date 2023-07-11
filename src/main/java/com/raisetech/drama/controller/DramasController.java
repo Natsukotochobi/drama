@@ -4,6 +4,9 @@ import com.raisetech.drama.dto.DramaDto;
 import com.raisetech.drama.entity.Drama;
 import com.raisetech.drama.form.InsertForm;
 import com.raisetech.drama.service.DramasService;
+import com.raisetech.drama.validation.PriorityValidation;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dramas")
+@Validated
 public class DramasController {
     private final DramasService dramasService;
 
@@ -32,10 +36,7 @@ public class DramasController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Drama>> getDramas(@RequestParam(value = "priority", required = false) String priority) {
-        if (priority != null && !isValidPriority(priority)) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<List<Drama>> getDramas(@Valid @PriorityValidation @RequestParam(value = "priority", required = false) String priority) {
         List<Drama> dramas;
         if (priority != null) {
             dramas = dramasService.getDramas(priority);
@@ -48,13 +49,13 @@ public class DramasController {
         return ResponseEntity.ok(dramas);
     }
 
-    private boolean isValidPriority(String priority) {
+    /*private boolean isValidPriority(String priority) {
         List<String> validPriorities = new ArrayList<>();
         validPriorities.add("A");
         validPriorities.add("B");
         validPriorities.add("C");
         return validPriorities.contains(priority);
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity create(@Validated @RequestBody InsertForm insertForm) {
