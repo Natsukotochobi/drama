@@ -3,6 +3,7 @@ package com.raisetech.drama.controller;
 import com.raisetech.drama.dto.DramaDto;
 import com.raisetech.drama.entity.Drama;
 import com.raisetech.drama.form.InsertForm;
+import com.raisetech.drama.form.UpdateForm;
 import com.raisetech.drama.service.DramasService;
 import com.raisetech.drama.validation.PriorityValidation;
 import jakarta.validation.Valid;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +59,18 @@ public class DramasController {
         URI location = UriComponentsBuilder.fromUriString("http://localohost:8080/create/" + newDramaId)
                 .build().toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") int id,
+                                 @Validated @RequestBody UpdateForm updateForm) throws Exception {
+        DramaDto dramaDto = new DramaDto(
+                updateForm.getTitle(),
+                updateForm.getYear(),
+                updateForm.getPriority());
+        Drama drama = dramasService.update(id, dramaDto);
+        return ResponseEntity.ok(drama);
+
     }
 
 

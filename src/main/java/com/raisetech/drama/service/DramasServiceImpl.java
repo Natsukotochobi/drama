@@ -7,6 +7,7 @@ import com.raisetech.drama.mapper.DramasMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DramasServiceImpl implements DramasService{
@@ -45,9 +46,8 @@ public class DramasServiceImpl implements DramasService{
             dramaDto.setPriority(drama.getPriority());
         }
         dramasMapper.update(id, dramaDto);
-        Drama updateDrama = dramasMapper.findById(id);
-                /*.orElseThrow(() ->
-                new ResourceNotFoundException("id:" + id + "番のタイトルが見つかりません。"));*/
+        Drama updateDrama = dramasMapper.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("id:" + id + "番のタイトルが見つかりません。"));
         return updateDrama;
     }
 }
