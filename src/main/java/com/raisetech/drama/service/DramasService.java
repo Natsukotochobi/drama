@@ -12,4 +12,6 @@ public interface DramasService {
     List<Drama> getAllDramas();
 
     int save(DramaDto dramaDto);
+
+    Drama update(int id, DramaDto dramaDto);
 }
