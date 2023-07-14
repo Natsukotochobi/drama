@@ -26,8 +26,8 @@ public interface DramasMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void save(DramaDto dramaDto);
 
-    @Update("UPDATE dramas SET title = #{dramaDto.title}, year = #{dramaDto.year}, priority = #{dramaDto.priority} "
+    @Update("UPDATE dramas SET title = #{title}, year = #{year}, priority = #{priority} "
             + "WHERE id = #{id}")
-    void update(int id, DramaDto dramaDto);
+    void update(Drama drama);
 
 }

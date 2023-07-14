@@ -25,7 +25,7 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 | 全件取得 | ドラマ一覧を返す | /drama |
 | 絞り込み検索 | priorityカラムの｛A、B、C｝を指定して検索 | /drama?priority=○○ |
 | 新規登録 | 新しいタイトルを登録する | /drama |
-| リストの編集 | ※実装予定 |  |
+| リストの編集 | 指定したidの内容を変更する | /drama/{id} |
 | 削除 | ※実装予定 |  |
 
 
@@ -50,12 +50,12 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 ![](imgs/2023-06-29-14-45-06.png)
 </details>
 <details>
-<summary><h4> 1-1. GET /drama?priority=○ 優先度で絞り込み </h4></summary>
+<summary><h4> 1-2. GET /drama?priority=○ 優先度で絞り込み </h4></summary>
 
 ![](imgs/2023-06-29-14-47-38.png)
 </details>
 <details>
-<summary><h4> 1-1. GET /drama?priority=○ priorityに存在しないものを指定したとき </h4></summary>
+<summary><h4> 1-3. GET /drama?priority=○ priorityに存在しないものを指定したとき </h4></summary>
 
 <h5>●指定した優先度のものがデータベースに存在しない場合</h5>
 
@@ -78,4 +78,13 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 
 ![](imgs/2023-06-29-14-41-28.png)
 </details>
+<details>
+<summary><h4> 3-1. PATCH /drama/{id} 更新</h4></summary>
 
+![](imgs/2023-07-13-11-53-26.png)
+</details>
+<details>
+<summary><h4> 3-2. PATCH /drama/{id} 指定したidにデータがないとき</h4></summary>
+
+![](imgs/2023-07-13-11-58-58.png)
+</details>
