@@ -19,4 +19,11 @@ public class DramaDto {
         this.year = year;
         this.priority = priority;
     }
+
+    public DramaDto(int id, String title, String year, String priority) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.priority = priority;
+    }
 }
