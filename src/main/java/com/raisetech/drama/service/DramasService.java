@@ -13,5 +13,5 @@ public interface DramasService {
 
     int save(DramaDto dramaDto);
 
-    Drama update(int id, DramaDto dramaDto);
+    Drama update(DramaDto dramaDto);
 }

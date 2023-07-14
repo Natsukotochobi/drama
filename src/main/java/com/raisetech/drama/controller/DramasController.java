@@ -65,10 +65,11 @@ public class DramasController {
     public ResponseEntity update(@PathVariable("id") int id,
                                  @Validated @RequestBody UpdateForm updateForm) throws Exception {
         DramaDto dramaDto = new DramaDto(
+                id,
                 updateForm.getTitle(),
                 updateForm.getYear(),
                 updateForm.getPriority());
-        Drama drama = dramasService.update(id, dramaDto);
+        Drama drama = dramasService.update(dramaDto);
         return ResponseEntity.ok(drama);
 
     }

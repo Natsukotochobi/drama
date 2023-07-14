@@ -32,9 +32,9 @@ public class DramasServiceImpl implements DramasService{
     }
 
     @Override
-    public Drama update(int id, DramaDto dramaDto) {
-        Drama drama = dramasMapper.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("id:" + id + "番のタイトルが見つかりません。"));
+    public Drama update(DramaDto dramaDto) {
+        Drama drama = dramasMapper.findById(dramaDto.getId()).orElseThrow(() ->
+                new ResourceNotFoundException("id:" + dramaDto.getId() + "番のタイトルが見つかりません。"));
         if (dramaDto.getTitle() != null) {
             drama.setTitle(dramaDto.getTitle());
         }
