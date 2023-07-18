@@ -52,7 +52,12 @@ public class DramasServiceImpl implements DramasService{
         if (dramaDto.getPriority() != null) {
             drama.setPriority(dramaDto.getPriority());
         }
-        dramasMapper.update(drama);
+        try {
+            dramasMapper.update(drama);
+        } catch (DuplicateKeyException e) {
+            dramasMapper.updateDramaIgnoreDuplicates(drama);
+            throw new DuplicateTitleException(drama.getTitle() + "は、すでに登録されています。");
+        }
         return drama;
     }
 }

@@ -33,4 +33,8 @@ public interface DramasMapper {
             + "WHERE id = #{id}")
     void update(Drama drama);
 
+    @Update("UPDATE IGNORE dramas SET title = #{title}, year = #{year}, priority = #{priority} "
+            + "WHERE id = #{id}")
+    void updateDramaIgnoreDuplicates(Drama drama);
+
 }
