@@ -2,8 +2,10 @@ package com.raisetech.drama.service;
 
 import com.raisetech.drama.dto.DramaDto;
 import com.raisetech.drama.entity.Drama;
+import com.raisetech.drama.exception.DuplicateTitleException;
 import com.raisetech.drama.exception.ResourceNotFoundException;
 import com.raisetech.drama.mapper.DramasMapper;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +27,15 @@ public class DramasServiceImpl implements DramasService{
     public List<Drama> getAllDramas(){
         return dramasMapper.findAll().stream().toList();
     }
+
     @Override
     public int save(DramaDto dramaDto) {
-        dramasMapper.save(dramaDto);
+        try {
+            dramasMapper.save(dramaDto);
+        } catch (DuplicateKeyException e) {
+            dramasMapper.saveDramaIgnoreDuplicates(dramaDto);
+            throw new DuplicateTitleException(dramaDto.getTitle() + "は、すでに登録されています。");
+        }
         return dramaDto.getId();
     }
 
