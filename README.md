@@ -34,12 +34,12 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 ## DBテーブル
 テーブル名：drama  
 
-| カラム名 | データ型 | NotNull | 備考 |
-| ------------ | ------------- | ------------- | ------------- | 
-| id | int | NOT NULL | ID、主キー、自動生成 |
-| title | VARCHAR(100) | NOT NULL | 見たいドラマのタイトル |
-| year | VARCHAR(100)  |  | 発表年 |
-| priority | VARCHAR(1) | NOT NULL | A>B>Cの順で優先順位が高いとする |
+| カラム名 | データ型 | NotNull | キー | 備考 |
+| ------------ | ------------- | ------------- | ------------- | ------------- |
+| id | int | NOT NULL | 主キー | ID、自動生成 |
+| title | VARCHAR(100) | NOT NULL | ユニーク | 見たいドラマのタイトル |
+| year | VARCHAR(100)  ||| 発表年 |
+| priority | VARCHAR(1) | NOT NULL || A>B>Cの順で優先順位が高いとする |
 
 ---
 
@@ -55,12 +55,12 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 ![](imgs/2023-06-29-14-47-38.png)
 </details>
 <details>
-<summary><h4> 1-3. GET /drama?priority=○ priorityに存在しないものを指定したとき </h4></summary>
+<summary><h4> 1-3. GETの例外・エラー処理  </h4></summary>
 
-<h5>●指定した優先度のものがデータベースに存在しない場合</h5>
+<h4>1-3-1. /drama?priority=○ priorityに指定したドラマがDBに存在しないとき</h4>
 
 ![](imgs/2023-07-10-11-29-09.png)
-<h5>●ABC以外のものを指定した場合</h5>
+<h4>1-3-2．/drama?priority=○ priorityにABC以外のものを指定したとき</h4>
 
 ![](imgs/2023-07-10-11-30-54.png)
 </details>
@@ -74,9 +74,13 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 ![](imgs/2023-06-29-14-35-52.png)
 </details>
 <details>
-<summary><h4> 2-2. POST /drama バリデーションエラー時</h4></summary>
+<summary><h4> 2-2. POSTの例外・エラー処理</h4></summary>
+<h4>2-2-1．/drama バリデーションエラーのとき</h4>
 
 ![](imgs/2023-06-29-14-41-28.png)
+<h4>2-2-2．/drama リクエストしたドラマのタイトルがすでに登録されているとき</h4>
+
+![](imgs/2023-07-19-11-07-29.png)
 </details>
 <details>
 <summary><h4> 3-1. PATCH /drama/{id} 更新</h4></summary>
@@ -84,7 +88,11 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 ![](imgs/2023-07-13-11-53-26.png)
 </details>
 <details>
-<summary><h4> 3-2. PATCH /drama/{id} 指定したidにデータがないとき</h4></summary>
+<summary><h4> 3-2. PATCHの例外・エラー処理</h4></summary>
+<h4> 3-2-1. PATCH /drama/{id} 指定したidにデータがないとき</h4>
 
 ![](imgs/2023-07-13-11-58-58.png)
+<h4> 3-2-2. PATCH /drama/{id} 更新したタイトルがすでにDBに登録されているとき</h4>
+
+![](imgs/2023-07-19-11-06-33.png)
 </details>
