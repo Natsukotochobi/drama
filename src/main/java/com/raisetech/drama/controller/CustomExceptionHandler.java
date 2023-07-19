@@ -1,5 +1,6 @@
 package com.raisetech.drama.controller;
 
+import com.raisetech.drama.exception.DuplicateTitleException;
 import com.raisetech.drama.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -61,5 +62,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
                 "error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
         }
+
+    @ExceptionHandler(value = DuplicateTitleException.class)
+    public ResponseEntity<Map<String, String>> handleDuplicateTitleException(
+            DuplicateTitleException ex, HttpServletRequest request) {
+        Map<String, String> body = Map.of(
+                "timeStamp", ZonedDateTime.now().toString(),
+                "message", ex.getMessage(),
+                "status", String.valueOf(HttpStatus.CONFLICT.value()),
+                "error", HttpStatus.CONFLICT.getReasonPhrase());
+        return new ResponseEntity(body, HttpStatus.CONFLICT);
+    }
 
 }
