@@ -4,7 +4,7 @@ RaiseTech 22年06月度 最終課題Spring Boot RestAPIのCRUDアプリケーシ
 ---
 ## 概要
 見たいドラマを忘れないよう、メモしておけるCRUDアプリです。  
-READ・CREATE・UPDATE・DELETE機能を実装予定。  
+READ・CREATE・UPDATE・DELETE機能を実装。  
 単体テスト、結合テスト、GitHub ActionsでのCIも実装予定。
 
 ---
@@ -26,7 +26,7 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 | 絞り込み検索 | priorityカラムの｛A、B、C｝を指定して検索 | /drama?priority=○○ |
 | 新規登録 | 新しいタイトルを登録する | /drama |
 | リストの編集 | 指定したidの内容を変更する | /drama/{id} |
-| 削除 | ※実装予定 |  |
+| 削除 | 指定したidのデータを削除する | /drama/{id} |
 
 
 ---
@@ -95,4 +95,15 @@ READ・CREATE・UPDATE・DELETE機能を実装予定。
 <h4> 3-2-2. PATCH /drama/{id} 更新したタイトルがすでにDBに登録されているとき</h4>
 
 ![](imgs/2023-07-19-11-06-33.png)
+</details>
+<details>
+<summary><h4>4-1. DELETE /drama/{id} 削除</h4></summary>
+
+![](imgs/2023-07-19-17-03-36.png)
+</details>
+<details>
+<summary><h4>4-2. DELETEの例外・エラー処理</h4></summary>
+<h4>4-2-1. /drama/{id} 指定したidにデータがないとき</h4>
+
+![](imgs/2023-07-19-17-04-40.png)
 </details>
