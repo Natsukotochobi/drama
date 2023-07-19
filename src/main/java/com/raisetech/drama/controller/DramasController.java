@@ -8,6 +8,7 @@ import com.raisetech.drama.service.DramasService;
 import com.raisetech.drama.validation.PriorityValidation;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,5 +75,10 @@ public class DramasController {
 
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") int id) throws Exception {
+        dramasService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

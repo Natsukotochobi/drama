@@ -2,6 +2,7 @@ package com.raisetech.drama.mapper;
 
 import com.raisetech.drama.dto.DramaDto;
 import com.raisetech.drama.entity.Drama;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -29,5 +30,8 @@ public interface DramasMapper {
     @Update("UPDATE dramas SET title = #{title}, year = #{year}, priority = #{priority} "
             + "WHERE id = #{id}")
     void update(Drama drama);
+
+    @Delete("DELETE FROM dramas WHERE id = #{id}")
+    void deleteById(int id);
 
 }
