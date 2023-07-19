@@ -33,7 +33,6 @@ public class DramasServiceImpl implements DramasService{
         try {
             dramasMapper.save(dramaDto);
         } catch (DuplicateKeyException e) {
-            dramasMapper.saveDramaIgnoreDuplicates(dramaDto);
             throw new DuplicateTitleException(dramaDto.getTitle() + "は、すでに登録されています。");
         }
         return dramaDto.getId();
@@ -55,7 +54,6 @@ public class DramasServiceImpl implements DramasService{
         try {
             dramasMapper.update(drama);
         } catch (DuplicateKeyException e) {
-            dramasMapper.updateDramaIgnoreDuplicates(drama);
             throw new DuplicateTitleException(drama.getTitle() + "は、すでに登録されています。");
         }
         return drama;

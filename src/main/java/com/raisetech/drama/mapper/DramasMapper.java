@@ -26,15 +26,8 @@ public interface DramasMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void save(DramaDto dramaDto);
 
-    @Insert("INSERT IGNORE INTO dramas (title, year, priority) VALUES (#{title}, #{year}, #{priority})")
-    void saveDramaIgnoreDuplicates(DramaDto dramaDto);
-
     @Update("UPDATE dramas SET title = #{title}, year = #{year}, priority = #{priority} "
             + "WHERE id = #{id}")
     void update(Drama drama);
-
-    @Update("UPDATE IGNORE dramas SET title = #{title}, year = #{year}, priority = #{priority} "
-            + "WHERE id = #{id}")
-    void updateDramaIgnoreDuplicates(Drama drama);
 
 }
