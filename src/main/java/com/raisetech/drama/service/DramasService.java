@@ -14,4 +14,6 @@ public interface DramasService {
     int save(DramaDto dramaDto);
 
     Drama update(DramaDto dramaDto);
+
+    void deleteById(int id);
 }

@@ -58,5 +58,12 @@ public class DramasServiceImpl implements DramasService{
         }
         return drama;
     }
+
+    @Override
+    public void deleteById(int id) {
+        dramasMapper.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("id:" + id + "番の曲が見つかりません。"));
+        dramasMapper.deleteById(id);
+    }
 }
 
