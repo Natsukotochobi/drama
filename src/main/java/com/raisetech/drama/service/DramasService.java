@@ -15,5 +15,5 @@ public interface DramasService {
 
     Drama update(DramaDto dramaDto);
 
-    void deleteById(int id) throws Exception;
+    void deleteById(int id);
 }

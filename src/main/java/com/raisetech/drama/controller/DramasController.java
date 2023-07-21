@@ -64,7 +64,7 @@ public class DramasController {
 
     @PatchMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") int id,
-                                 @Validated @RequestBody UpdateForm updateForm) throws Exception {
+                                 @Validated @RequestBody UpdateForm updateForm) {
         DramaDto dramaDto = new DramaDto(
                 id,
                 updateForm.getTitle(),
@@ -76,7 +76,7 @@ public class DramasController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") int id) throws Exception {
+    public ResponseEntity delete(@PathVariable("id") int id) {
         dramasService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
