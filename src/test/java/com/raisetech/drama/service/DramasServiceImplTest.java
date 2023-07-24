@@ -16,6 +16,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 public class DramasServiceImplTest {
 
@@ -45,6 +48,6 @@ public class DramasServiceImplTest {
 
         assertThat(actualDramas).isEqualTo(dramas);
 
-
+        verify(dramasMapper, times(1)).findAll();
     }
 }
