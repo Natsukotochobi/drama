@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,5 +53,15 @@ public class DramasServiceImplTest {
         verify(dramasMapper, times(1)).findAll();
     }
 
-    
+    @Test
+    void priorityの絞り込みを正常に返すかテストする() {
+        List<Drama> dramas = Arrays.asList(new Drama(1, "Drama1", "2022", "A"));
+        doReturn(dramas).when(dramasMapper).findByPriority("A");
+
+        // テスト対象メソッドを呼び出す
+        List<Drama> actualDramas = dramasServiceImpl.getDramas("A");
+
+        assertThat(actualDramas).isEqualTo(dramas);
+        verify(dramasMapper, times(1)).findByPriority("A");
+    }
 }
