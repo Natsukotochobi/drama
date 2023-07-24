@@ -13,7 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 import static org.mockito.Mockito.times;
@@ -50,4 +51,6 @@ public class DramasServiceImplTest {
 
         verify(dramasMapper, times(1)).findAll();
     }
+
+    
 }
