@@ -21,10 +21,12 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -137,7 +139,27 @@ public class DramasServiceImplTest {
     }
 
     @Test
-    void メソッドで存在しないidが指定された時例外がスローされるかテストする() {
+    void 削除が成功した場合をテストする() {
+        int idToDelete = 1;
+        Drama existingDrama = new Drama(1, "Existing Title", "2022", "A");
+
+        doReturn(Optional.of(existingDrama)).when(dramasMapper).findById(idToDelete);
+        doNothing().when(dramasMapper).deleteById(idToDelete);
+
+        dramasServiceImpl.deleteById(idToDelete);
+        verify(dramasMapper, times(1)).findById(idToDelete);
+        verify(dramasMapper, times(1)).deleteById(idToDelete);
+    }
+
+    @Test
+    void deleteメソッドで存在しないidが指定された時例外がスローされるかテストする() {
+        int idToDelete = 999;
+        doReturn(Optional.empty()).when(dramasMapper).findById(idToDelete);
+
+        assertThrows(ResourceNotFoundException.class, () -> dramasServiceImpl.deleteById(idToDelete));
+        verify(dramasMapper, times(1)).findById(idToDelete);
+        verify(dramasMapper, never()).deleteById(anyInt());
+    }
 
 
 
