@@ -30,6 +30,18 @@ public class DramaDto {
         this.priority = priority;
     }
 
+    public void updateDrama(Drama drama) {
+        if (this.title != null) {
+            drama.setTitle(this.title);
+        }
+        if (this.year != null) {
+            drama.setYear(this.year);
+        }
+        if (this.priority != null) {
+            drama.setPriority(this.priority);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
