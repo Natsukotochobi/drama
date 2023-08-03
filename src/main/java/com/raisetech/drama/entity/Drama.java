@@ -1,5 +1,6 @@
 package com.raisetech.drama.entity;
 
+import com.raisetech.drama.dto.DramaDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,18 @@ public class Drama {
     private String title;
     private String year;
     private String priority;
+
+    public void updateDrama(DramaDto dramaDto) {
+        if (dramaDto.getTitle() != null) {
+            setTitle(dramaDto.getTitle());
+        }
+        if (dramaDto.getYear() != null) {
+            setYear(dramaDto.getYear());
+        }
+        if (dramaDto.getPriority() != null) {
+            setPriority(dramaDto.getPriority());
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

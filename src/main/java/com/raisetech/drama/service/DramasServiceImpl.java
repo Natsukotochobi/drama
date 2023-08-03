@@ -42,8 +42,8 @@ public class DramasServiceImpl implements DramasService{
     public Drama update(DramaDto dramaDto) {
         Drama drama = dramasMapper.findById(dramaDto.getId()).orElseThrow(() ->
                 new ResourceNotFoundException("id:" + dramaDto.getId() + "番のタイトルが見つかりません。"));
-       //DramaDtoクラスのupdateDramaメソッドを呼び出し
-        dramaDto.updateDrama(drama);
+       //DramaクラスのupdateDramaメソッドを呼び出し
+        drama.updateDrama(dramaDto);
         try {
             dramasMapper.update(drama);
         } catch (DuplicateKeyException e) {
