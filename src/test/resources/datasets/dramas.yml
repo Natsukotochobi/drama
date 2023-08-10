@@ -1,0 +1,13 @@
+dramas:
+  - id: 1
+    title: "MIMICS"
+    year: "2022"
+    priority: "A"
+  - id: 2
+    title: "偶然見つけたハル"
+    year: "2019"
+    priority: "C"
+  - id: 3
+    title: "A-TEEN"
+    year: "2018"
+    priority: "A"
