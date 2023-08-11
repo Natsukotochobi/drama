@@ -1,0 +1,5 @@
+dramas:
+  - id: 1
+    title: "更新されたドラマ"
+    year: "2023"
+    priority: "C"

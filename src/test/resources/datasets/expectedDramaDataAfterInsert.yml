@@ -1,0 +1,5 @@
+dramas:
+  - id: 1
+    title: "追加したドラマ"
+    year: "2023"
+    priority: "A"
