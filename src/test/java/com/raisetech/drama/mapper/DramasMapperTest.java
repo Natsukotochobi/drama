@@ -95,7 +95,7 @@ public class DramasMapperTest {
     }
 
     @Test
-    @DataSet(value = "datasets/forUpdateDrama.yml")
+    @DataSet(value = "datasets/dramas.yml")
     @ExpectedDataSet(value = "datasets/expectedDramaDataAfterUpdate.yml")
     @Transactional
     void ドラマの情報を更新できること() {
@@ -113,11 +113,11 @@ public class DramasMapperTest {
 
     @Test
     @DataSet(value = "datasets/dramas.yml")
-    @ExpectedDataSet(value = "datasets/dramas.yml")
+    @ExpectedDataSet(value = "datasets/expectedDramaDataAfterDelete.yml")
     @Transactional
-    void nullが更新で渡された場合にもとのデータのままであること() {
-        Drama drama = new Drama(1, null, null, null);
-        dramasMapper.update(drama);
+    void ドラマを削除できること() {
+        int targetId = 3;
+        dramasMapper.deleteById(targetId);
     }
 
 
