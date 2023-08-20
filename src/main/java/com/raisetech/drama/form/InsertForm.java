@@ -27,7 +27,6 @@ public class InsertForm {
     private String year;
 
     @NotNull
-    //@Size(max = 1)
     @PriorityValidation
     private String priority;
 
