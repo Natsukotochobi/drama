@@ -21,7 +21,7 @@ public class UpdateForm {
 
     @Pattern(regexp = "^\\d{4}$")
     private String year;
-    
+
     @PriorityValidation
     private String priority;
 
