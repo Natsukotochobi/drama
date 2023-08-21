@@ -42,7 +42,7 @@ class InsertFormTest {
     }
 
     @Test
-    void タイトルに100文字以上入力するとバリデーションエラーになること() {
+    void タイトルに100文字を超えて入力するとバリデーションエラーになること() {
         InsertForm insertForm = new InsertForm();
         //「あ」を101文字入力する
         insertForm.setTitle("あああああああああああああああああああああああ" +
