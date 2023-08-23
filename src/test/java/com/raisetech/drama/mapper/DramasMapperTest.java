@@ -77,7 +77,7 @@ public class DramasMapperTest {
     }
 
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(value = "datasets/dramas.yml")
     @ExpectedDataSet(value = "datasets/expectedDramaDataAfterInsert.yml", ignoreCols = "id")
     @Transactional
     void 新しいドラマが登録できること() {
