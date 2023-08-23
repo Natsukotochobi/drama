@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UpdateFormTest {
     @Test
@@ -98,10 +97,10 @@ class UpdateFormTest {
     }
 
     @Test
-    void タイトルと優先度にnullを入れてもバリデーションエラーにならないこと() {
+    void すべてのフィールドにnullを入れてもバリデーションエラーにならないこと() {
         UpdateForm updateForm = new UpdateForm();
         updateForm.setTitle(null);
-        updateForm.setYear("2023");
+        updateForm.setYear(null);
         updateForm.setPriority(null);
 
         Set<ConstraintViolation<UpdateForm>> result =
@@ -111,5 +110,4 @@ class UpdateFormTest {
                         .validate(updateForm);
         assertThat(result.size()).isEqualTo(0);
     }
-
 }
