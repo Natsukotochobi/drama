@@ -70,7 +70,7 @@ public class DramasMapperTest {
     @Test
     @DataSet(value = "datasets/dramas.yml")
     @Transactional
-    void 指定したidが存在しない場合に空のOptionalが返ってくること() {
+    void 指定したidが存在しない場合に返ってくるデータが空であること() {
         int targetId = 100;
         Optional<Drama> drama = dramasMapper.findById(targetId);
         assertThat(drama).isEmpty();

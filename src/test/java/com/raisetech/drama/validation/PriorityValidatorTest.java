@@ -35,7 +35,7 @@ class PriorityValidatorTest {
 
         assertThat(isValid).isTrue();
     }
-    
+
     private ConstraintValidatorContext mockContext() {
         ConstraintValidatorContext context = Mockito.mock(ConstraintValidatorContext.class);
         ConstraintValidatorContext.ConstraintViolationBuilder builder =
