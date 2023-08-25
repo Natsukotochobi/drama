@@ -62,7 +62,7 @@ public class DramasMapperTest {
     @Test
     @DataSet(value = "datasets/dramas.yml")
     @Transactional
-    void idで指定したドラマを取得できること() {
+    void idで指定したドラマのみを1件取得できること() {
         Optional<Drama> drama = dramasMapper.findById(1);
         assertThat(drama).isEqualTo(Optional.of(new Drama(1, "MIMICS", "2022", "A")));
     }
