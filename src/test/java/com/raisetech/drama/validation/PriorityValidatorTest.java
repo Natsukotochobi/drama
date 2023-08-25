@@ -11,6 +11,7 @@ class PriorityValidatorTest {
 
     @Test
     void 正常な値の場合はtrueが返ってくること() {
+        //ABCのうち、どれか一文字の場合は正常な値となる
         PriorityValidator validator = new PriorityValidator();
         String validPriority = "A";
         boolean isValid = validator.isValid(validPriority, mockContext());
