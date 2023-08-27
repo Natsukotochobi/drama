@@ -7,10 +7,12 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateForm {
@@ -20,7 +22,6 @@ public class UpdateForm {
     @Pattern(regexp = "^\\d{4}$")
     private String year;
 
-    @Size(max = 1)
     @PriorityValidation
     private String priority;
 

@@ -3,16 +3,19 @@ package com.raisetech.drama.form;
 import com.raisetech.drama.entity.Drama;
 import com.raisetech.drama.validation.PriorityValidation;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class InsertForm {
@@ -23,8 +26,7 @@ public class InsertForm {
     @Pattern(regexp = "^\\d{4}$")
     private String year;
 
-    @NotBlank
-    @Size(max = 1)
+    @NotNull
     @PriorityValidation
     private String priority;
 
