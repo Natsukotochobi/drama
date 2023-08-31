@@ -1,6 +1,7 @@
 package com.raisetech.drama.integrationtest;
 
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.Customization;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -18,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.hamcrest.text.MatchesPattern.matchesPattern;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -116,6 +120,24 @@ public class DramaRestApiIntegrationTest {
                 """, response,
                 new CustomComparator(JSONCompareMode.LENIENT,
                         new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @ExpectedDataSet(value = "datasets/expectedDramaDataAfterInsert.yml", ignoreCols = "id")
+    @Transactional
+    void ドラマを新規登録できること() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "追加したドラマ",
+                                        "year": "2023",
+                                        "priority": "A"
+                                    }
+                                """))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(header().string("Location",  matchesPattern("http://localhost:8080/create/\\d+")));
     }
 
 }
