@@ -143,7 +143,6 @@ public class DramaRestApiIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "datasets/dramas.yml")
     @Transactional
     void すべてnullで登録するとtitleとpriorityがエラーになりBadRequestが返ってくること() throws Exception{
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
@@ -176,7 +175,6 @@ public class DramaRestApiIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "datasets/dramas.yml")
     @Transactional
     void すべて空文字で登録するとtitleとpriorityがエラーになりBadRequestが返ってくること() throws Exception{
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
@@ -209,7 +207,6 @@ public class DramaRestApiIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "datasets/dramas.yml")
     @Transactional
     void titleに101文字以上入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
         //titleに101文字入力する
@@ -241,7 +238,6 @@ public class DramaRestApiIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "datasets/dramas.yml")
     @Transactional
     void yearに整数4桁以外のものを入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
@@ -272,7 +268,6 @@ public class DramaRestApiIntegrationTest {
     }
 
     @Test
-    @DataSet(value = "datasets/dramas.yml")
     @Transactional
     void priorityにABC以外のものを入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
@@ -300,6 +295,54 @@ public class DramaRestApiIntegrationTest {
                         """, response,
                 new CustomComparator(JSONCompareMode.LENIENT,
                         new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void 登録するタイトルがすでにDBに存在するときエラーになりConflictが返ってくること() throws Exception{
+        //タイトルのみがconflictの原因であるか調べるため他の項目は登録にない内容にする
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "MIMICS",
+                                        "year": "2000",
+                                        "priority": "B"
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "409",
+                            "error": "Conflict",
+                            "message": "MIMICSは、すでに登録されています。",
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @ExpectedDataSet(value = "datasets/expectedDramaDataAfterUpdate.yml")
+    @Transactional
+    void 指定されたidのドラマが存在するとき内容が更新されること() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.patch("/msg/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("""
+                            {
+                                "msg":"Bye"
+                            }
+                            """))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
     }
 
 }
