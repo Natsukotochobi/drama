@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -137,7 +138,168 @@ public class DramaRestApiIntegrationTest {
                                     }
                                 """))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(header().string("Location",  matchesPattern("http://localhost:8080/create/\\d+")));
+                .andExpect(header().string(
+                        "Location",  matchesPattern("http://localhost:8080/create/\\d+")));
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void すべてnullで登録するとtitleとpriorityがエラーになりBadRequestが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                                    {
+                                        "title": null,
+                                        "year": null,
+                                        "priority": null
+                                    }
+                                """)
+                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "message": {
+                                "title": "空白は許可されていません",
+                                "priority": "null は許可されていません"
+                                        },
+                            "error": "Bad Request",
+                            "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
+                            "status": "400"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void すべて空文字で登録するとtitleとpriorityがエラーになりBadRequestが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "",
+                                        "year": "",
+                                        "priority": ""
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "message": {
+                                "title": "空白は許可されていません",
+                                "priority": "Priority入力の指定に沿っていません。"
+                                        },
+                            "error": "Bad Request",
+                            "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
+                            "status": "400"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void titleに101文字以上入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
+        //titleに101文字入力する
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                     {
+                                        "title": "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ",
+                                        "year": "2023",
+                                        "priority": "A"
+                                     }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "message": {
+                                "title": "0 から 100 の間のサイズにしてください"
+                                        },
+                            "error": "Bad Request",
+                            "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
+                            "status": "400"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void yearに整数4桁以外のものを入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "追加したドラマ",
+                                        "year": "abcd",
+                                        "priority": "A"
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "400",
+                            "error": "Bad Request",
+                            "message": {
+                                "year": "正規表現 \\"^\\\\d{4}$\\" にマッチさせてください"
+                                        },
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void priorityにABC以外のものを入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "追加したドラマ",
+                                        "year": "2023",
+                                        "priority": "D"
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "400",
+                            "error": "Bad Request",
+                            "message": {
+                                "priority": "Priority入力の指定に沿っていません。"
+                                        },
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
     }
 
 }
