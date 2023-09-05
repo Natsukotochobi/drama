@@ -452,8 +452,7 @@ public class DramaRestApiIntegrationTest {
                                         "year": "2023",
                                         "priority": "D"
                                     }
-                                """)
-                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                                """))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
@@ -469,6 +468,53 @@ public class DramaRestApiIntegrationTest {
                         """, response,
                 new CustomComparator(JSONCompareMode.LENIENT,
                         new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void 更新するタイトルがすでにDBに存在するときエラーになりConflictが返ってくること() throws Exception{
+        //タイトルのみがconflictの原因であるか調べるため他の項目は登録にない内容にする
+        String response = mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "偶然見つけたハル",
+                                        "year": "2000",
+                                        "priority": "B"
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "409",
+                            "error": "Conflict",
+                            "message": "偶然見つけたハルは、すでに登録されています。",
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @ExpectedDataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void nullで更新すると更新前の情報のまま据え置かれエラーにならないこと() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": null,
+                                        "year": null,
+                                        "priority": null
+                                    }
+                                """))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }
