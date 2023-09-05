@@ -208,7 +208,7 @@ public class DramaRestApiIntegrationTest {
 
     @Test
     @Transactional
-    void titleに101文字以上入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
+    void titleに101文字以上入力すると新規登録されずBadRequestが返ってくること() throws Exception{
         //titleに101文字入力する
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -239,7 +239,7 @@ public class DramaRestApiIntegrationTest {
 
     @Test
     @Transactional
-    void yearに整数4桁以外のものを入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
+    void yearに整数4桁以外のものを入力すると新規登録されずBadRequestが返ってくること() throws Exception{
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -269,7 +269,7 @@ public class DramaRestApiIntegrationTest {
 
     @Test
     @Transactional
-    void priorityにABC以外のものを入力するとバリデーションエラーになりBadRequestが返ってくること() throws Exception{
+    void priorityにABC以外のものを入力すると新規登録されずBadRequestが返ってくること() throws Exception{
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/dramas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -334,15 +334,141 @@ public class DramaRestApiIntegrationTest {
     @ExpectedDataSet(value = "datasets/expectedDramaDataAfterUpdate.yml")
     @Transactional
     void 指定されたidのドラマが存在するとき内容が更新されること() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.patch("/msg/{id}", 1)
+        mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content("""
                             {
-                                "msg":"Bye"
+                                "title": "更新されたドラマ",
+                                "year": "2023",
+                                "priority": "C"
                             }
                             """))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void 指定されたidがDBに存在しないとき更新されずNotFoundが返ってくること() throws Exception{
+       String response = mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 99)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("""
+                            {
+                                "title": "更新されたドラマ",
+                                "year": "2023",
+                                "priority": "C"
+                            }
+                            """))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "404",
+                            "error": "Not Found",
+                            "message": "id:99番のタイトルが見つかりません。",
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]",
+                            "path": "/dramas/99"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void titleに101文字以上入力すると更新処理されずBadRequestが返ってくること() throws Exception{
+        //titleに101文字入力する
+        String response = mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                     {
+                                        "title": "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ",
+                                        "year": "2023",
+                                        "priority": "A"
+                                     }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "message": {
+                                "title": "0 から 100 の間のサイズにしてください"
+                                        },
+                            "error": "Bad Request",
+                            "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
+                            "status": "400"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void yearに整数4桁以外のものを入力すると更新処理されずBadRequestが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "追加したドラマ",
+                                        "year": "abcd",
+                                        "priority": "A"
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "400",
+                            "error": "Bad Request",
+                            "message": {
+                                "year": "正規表現 \\"^\\\\d{4}$\\" にマッチさせてください"
+                                        },
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void priorityにABC以外のものを入力すると更新処理されずBadRequestが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.patch("/dramas/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "title": "追加したドラマ",
+                                        "year": "2023",
+                                        "priority": "D"
+                                    }
+                                """)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "400",
+                            "error": "Bad Request",
+                            "message": {
+                                "priority": "Priority入力の指定に沿っていません。"
+                                        },
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
     }
 
 }
