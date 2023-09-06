@@ -11,11 +11,10 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 ## 構成要件
 * Java 17
 * Spring Boot 3.1.0
-* （JUnit 5.8.2）※使用予定
 * MySQL 8.0.33
 * Docker 20.10.21
-* （JUnit 5）※使用予定
-* （Mockito）※使用予定
+* JUnit 5.9.3
+* Mockito
 
 ---
 ## 機能一覧
