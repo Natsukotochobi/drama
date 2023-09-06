@@ -55,7 +55,7 @@ public class DramasServiceImpl implements DramasService{
     @Override
     public void deleteById(int id) {
         dramasMapper.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("id:" + id + "番の曲が見つかりません。"));
+                new ResourceNotFoundException("id:" + id + "番のタイトルが見つかりません。"));
         dramasMapper.deleteById(id);
     }
 }

@@ -517,4 +517,34 @@ public class DramaRestApiIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @ExpectedDataSet(value = "datasets/expectedDramaDataAfterDelete.yml")
+    @Transactional
+    void 指定されたidのドラマが存在するときDBから削除されること() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.delete("/dramas/{id}", 3))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DataSet(value = "datasets/dramas.yml")
+    @Transactional
+    void 指定されたidがDBに存在しないとき削除されずNotFoundが返ってくること() throws Exception{
+        String response = mockMvc.perform(MockMvcRequestBuilders.delete("/dramas/{id}", 99))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                        {
+                            "status": "404",
+                            "error": "Not Found",
+                            "message": "id:99番のタイトルが見つかりません。",
+                            "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]",
+                            "path": "/dramas/99"
+                        }
+                        """, response,
+                new CustomComparator(JSONCompareMode.LENIENT,
+                        new Customization("timeStamp", (o1, o2) -> true))); // タイムスタンプを無視
+    }
+
 }
