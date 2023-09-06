@@ -56,12 +56,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(
             ConstraintViolationException ex, HttpServletRequest request) {
+
         Map<String, String> body = Map.of(
                 "timeStamp", ZonedDateTime.now().toString(),
                 "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
-                "error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+                "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "message", ex.getMessage()
+        );
         return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
         }
+
 
     @ExceptionHandler(value = DuplicateTitleException.class)
     public ResponseEntity<Map<String, String>> handleDuplicateTitleException(

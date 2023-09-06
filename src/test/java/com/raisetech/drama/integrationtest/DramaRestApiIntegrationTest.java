@@ -106,7 +106,7 @@ public class DramaRestApiIntegrationTest {
     @Test
     @DataSet(value = "datasets/dramas.yml")
     @Transactional
-    void priorityでABC以外を指定したときBadRequestが返ってくること() throws Exception {
+    void priorityでABC以外を指定したときBadRequestが返ってくること() throws Exception {    //チェック！！
         String response = mockMvc.perform(MockMvcRequestBuilders.get("/dramas")
                         .param("priority", "D"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -116,7 +116,8 @@ public class DramaRestApiIntegrationTest {
                 {
                     "error": "Bad Request",
                     "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
-                    "status": "400"
+                    "status": "400",
+                    "message": "getDramas.priority: Priority入力の指定に沿っていません。"
                 }
                 """, response,
                 new CustomComparator(JSONCompareMode.LENIENT,
