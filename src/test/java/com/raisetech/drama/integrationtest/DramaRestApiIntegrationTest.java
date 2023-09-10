@@ -169,7 +169,7 @@ public class DramaRestApiIntegrationTest {
                             "message": {
                                 "title": "空白は許可されていません",
                                 "priority": "null は許可されていません"
-                                        },
+                            },
                             "error": "Bad Request",
                             "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
                             "status": "400"
@@ -201,7 +201,7 @@ public class DramaRestApiIntegrationTest {
                             "message": {
                                 "title": "空白は許可されていません",
                                 "priority": "Priority入力の指定に沿っていません。"
-                                        },
+                            },
                             "error": "Bad Request",
                             "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
                             "status": "400"
@@ -233,7 +233,7 @@ public class DramaRestApiIntegrationTest {
                         {
                             "message": {
                                 "title": "0 から 100 の間のサイズにしてください"
-                                        },
+                            },
                             "error": "Bad Request",
                             "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
                             "status": "400"
@@ -265,7 +265,7 @@ public class DramaRestApiIntegrationTest {
                             "error": "Bad Request",
                             "message": {
                                 "year": "正規表現 \\"^\\\\d{4}$\\" にマッチさせてください"
-                                        },
+                            },
                             "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
                         }
                         """, response,
@@ -295,7 +295,7 @@ public class DramaRestApiIntegrationTest {
                             "error": "Bad Request",
                             "message": {
                                 "priority": "Priority入力の指定に沿っていません。"
-                                        },
+                            },
                             "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
                         }
                         """, response,
@@ -405,7 +405,7 @@ public class DramaRestApiIntegrationTest {
                         {
                             "message": {
                                 "title": "0 から 100 の間のサイズにしてください"
-                                        },
+                            },
                             "error": "Bad Request",
                             "timeStamp": "2023-08-30T10:50:29.604145900+09:00[Asia/Tokyo]",
                             "status": "400"
@@ -438,7 +438,7 @@ public class DramaRestApiIntegrationTest {
                             "error": "Bad Request",
                             "message": {
                                 "year": "正規表現 \\"^\\\\d{4}$\\" にマッチさせてください"
-                                        },
+                            },
                             "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
                         }
                         """, response,
@@ -468,7 +468,7 @@ public class DramaRestApiIntegrationTest {
                             "error": "Bad Request",
                             "message": {
                                 "priority": "Priority入力の指定に沿っていません。"
-                                        },
+                            },
                             "timeStamp": "2023-09-01T16:12:47.452803800+09:00[Asia/Tokyo]"
                         }
                         """, response,
