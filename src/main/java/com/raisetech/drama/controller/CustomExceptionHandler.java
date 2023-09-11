@@ -3,6 +3,7 @@ package com.raisetech.drama.controller;
 import com.raisetech.drama.exception.DuplicateTitleException;
 import com.raisetech.drama.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -51,17 +54,34 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
                 "message", errors
         );
         return ResponseEntity.badRequest().body(body);
-
     }
-    @ExceptionHandler
-    public ResponseEntity<Map<String, String>> handleConstraintViolationException(
-            ConstraintViolationException ex, HttpServletRequest request) {
-        Map<String, String> body = Map.of(
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleConstraintViolationException(ConstraintViolationException ex) {
+
+        var violations = ex.getConstraintViolations();
+        List<Map<String, String>> errors = new ArrayList<>();
+        for (ConstraintViolation<?> violation : violations) {
+            Map<String, String> error = new HashMap<>();
+            // propertyPathの値をkeyに格納する。ただし、ピリオドで区切られている場合は、最後の値をkeyに格納する。
+            // getDramas.priorityの場合は、priorityをkeyに格納する。
+            String key = violation.getPropertyPath().toString();
+            if (key.contains(".")) {
+                key = key.substring(key.lastIndexOf(".") + 1);
+            }
+            error.put("field", key);
+            error.put("message", violation.getMessage());
+            errors.add(error);
+        }
+
+        Map<String, Object> body = Map.of(
                 "timeStamp", ZonedDateTime.now().toString(),
                 "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
-                "error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+                "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "messages", errors
+        );
         return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
-        }
+    }
 
     @ExceptionHandler(value = DuplicateTitleException.class)
     public ResponseEntity<Map<String, String>> handleDuplicateTitleException(
