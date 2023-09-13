@@ -2,13 +2,21 @@ package com.raisetech.drama.form;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateFormTest {
+
+    @BeforeEach
+    void setUp() {
+        // テストケース内でのローカライズを設定（ここでは日本語を指定）
+        Locale.setDefault(Locale.JAPANESE);
+    }
     @Test
     void 正しい値を入力した時にバリデーションエラーとならないこと() {
         UpdateForm updateForm = new UpdateForm();
