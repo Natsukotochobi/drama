@@ -5,7 +5,8 @@ CREATE TABLE dramas (
   title VARCHAR(100) NOT NULL,
   year VARCHAR(4),
   priority VARCHAR(1) NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  UNIQUE (title)
 );
 
 INSERT INTO dramas (title, year, priority) VALUES ("気象庁の人々", "2022", "A");
