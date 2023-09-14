@@ -14,7 +14,7 @@ class UpdateFormTest {
 
     @BeforeEach
     void setUp() {
-        // テストケース内でのローカライズを設定（ここでは日本語を指定）
+        // テストケース内でのローカライズを設定（日本語を指定）
         Locale.setDefault(Locale.JAPANESE);
     }
     @Test
