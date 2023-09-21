@@ -4,7 +4,6 @@ import com.raisetech.drama.entity.Drama;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Objects;
 
 @Getter
@@ -32,13 +31,13 @@ public class DramaDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Drama)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof Drama)) {return false;}
         Drama drama = (Drama) o;
-        return Objects.equals(getId(), drama.getId()) &&
-                Objects.equals(getTitle(), drama.getTitle()) &&
-                Objects.equals(getYear(), drama.getYear()) &&
-                Objects.equals(getPriority(), drama.getPriority());
+        return Objects.equals(getId(), drama.getId())
+                && Objects.equals(getTitle(), drama.getTitle())
+                && Objects.equals(getYear(), drama.getYear())
+                && Objects.equals(getPriority(), drama.getPriority());
     }
 
     @Override

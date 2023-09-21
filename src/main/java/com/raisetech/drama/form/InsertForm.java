@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Objects;
 
 
@@ -32,12 +31,12 @@ public class InsertForm {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Drama)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof Drama)) {return false;}
         Drama drama = (Drama) o;
-        return Objects.equals(getTitle(), drama.getTitle()) &&
-                Objects.equals(getYear(), drama.getYear()) &&
-                Objects.equals(getPriority(), drama.getPriority());
+        return Objects.equals(getTitle(), drama.getTitle())
+                && Objects.equals(getYear(), drama.getYear())
+                && Objects.equals(getPriority(), drama.getPriority());
     }
 
     @Override
