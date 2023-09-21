@@ -31,8 +31,12 @@ public class DramaDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (!(o instanceof Drama)) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Drama)) {
+            return false;
+        }
         Drama drama = (Drama) o;
         return Objects.equals(getId(), drama.getId())
                 && Objects.equals(getTitle(), drama.getTitle())

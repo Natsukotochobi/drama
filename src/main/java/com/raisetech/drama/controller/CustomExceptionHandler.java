@@ -56,9 +56,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResponseEntity<Map<String, Object>> handleConstraintViolationException
-            (ConstraintViolationException ex) {
-
+    public ResponseEntity<Map<String, Object>> handleConstraintViolationException(
+        ConstraintViolationException ex) {
         var violations = ex.getConstraintViolations();
         List<Map<String, String>> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : violations) {

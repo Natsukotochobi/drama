@@ -34,8 +34,9 @@ public class DramasController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Drama>> getDramas
-            (@Valid @PriorityValidation @RequestParam(value = "priority", required = false) String priority) {
+    public ResponseEntity<List<Drama>> getDramas(
+        @Valid @PriorityValidation @RequestParam(value = "priority", required = false)
+        String priority) {
         List<Drama> dramas;
         if (priority != null) {
             dramas = dramasService.getDramas(priority);
