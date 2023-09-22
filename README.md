@@ -131,6 +131,7 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 <h4>プルリクエストの作成で実行</h4>
 
 ![](imgs/2023-09-22-11-03-02.png)
+<img src="imgs/2023-09-22-11-03-02.png" style="max-width: 300px;">
 
 <h4>Codecovによるカバレッジ率の表示</h4>
 
