@@ -1,11 +1,16 @@
 # Dramaメモアプリ
+
+[![dramaProject-CI](https://github.com/Natsukotochobi/drama/actions/workflows/dramaTest.yml/badge.svg)](https://github.com/Natsukotochobi/drama/actions/workflows/dramaTest.yml)
+
+[![codecov](https://codecov.io/github/Natsukotochobi/drama/graph/badge.svg?token=6EY9VNB4HT)](https://codecov.io/github/Natsukotochobi/drama)
+
 RaiseTech 22年06月度 最終課題Spring Boot RestAPIのCRUDアプリケーション
 
 ---
 ## 概要
 見たいドラマを忘れないよう、メモしておけるCRUDアプリです。  
 READ・CREATE・UPDATE・DELETE機能を実装。  
-単体テスト、結合テスト、GitHub ActionsでのCIも実装予定。
+単体テスト、結合テスト、GitHub ActionsでのCIも実装。
 
 ---
 ## 構成要件
@@ -43,6 +48,8 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 ---
 
 ## 実行結果
+
+### 【GETリクエスト＆レスポンス】
 <details>
 <summary><h4> 1-1. GET /drama 一覧表示 </h4></summary>
 
@@ -63,6 +70,8 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 
 ![](imgs/2023-07-10-11-30-54.png)
 </details>
+
+### 【POSTリクエスト＆レスポンス】
 <details>
 <summary><h4> 2-1. POST /drama 新規登録</h4></summary>
 <h5>ResponseBody</h5>
@@ -81,6 +90,8 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 
 ![](imgs/2023-07-19-11-07-29.png)
 </details>
+
+### 【PATCHリクエスト＆レスポンス】
 <details>
 <summary><h4> 3-1. PATCH /drama/{id} 更新</h4></summary>
 
@@ -95,6 +106,8 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 
 ![](imgs/2023-07-19-11-06-33.png)
 </details>
+
+### 【DELETEリクエスト＆レスポンス】
 <details>
 <summary><h4>4-1. DELETE /drama/{id} 削除</h4></summary>
 
@@ -106,3 +119,25 @@ READ・CREATE・UPDATE・DELETE機能を実装。
 
 ![](imgs/2023-07-19-17-04-40.png)
 </details>
+
+---
+## CIの実装
+
+* 自動テスト
+* Checkstyle
+* Codecov
+* Discordへの通知
+
+<h4>プルリクエストの作成で実行</h4>
+
+![](imgs/2023-09-22-11-03-02.png)
+
+<h4>Codecovによるカバレッジ率の表示</h4>
+
+![](imgs/2023-09-22-11-12-12.png)
+![](imgs/2023-09-22-11-07-09.png)
+
+<h4>Discordへの結果の通知</h4>
+
+![](imgs/2023-09-22-11-08-58.png)
+
