@@ -24,7 +24,7 @@ public class UpdateForm {
     @PriorityValidation
     private String priority;
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -41,5 +41,5 @@ public class UpdateForm {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getYear(), getPriority());
-    }
+    }*/
 }

@@ -29,7 +29,7 @@ public class DramaDto {
         this.priority = priority;
     }
 
-    @Override
+ /*   @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -47,5 +47,5 @@ public class DramaDto {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getTitle(), getYear(), getPriority());
-    }
+    }*/
 }

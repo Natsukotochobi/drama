@@ -29,7 +29,7 @@ public class InsertForm {
     @PriorityValidation
     private String priority;
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -46,5 +46,5 @@ public class InsertForm {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getYear(), getPriority());
-    }
+    }*/
 }
