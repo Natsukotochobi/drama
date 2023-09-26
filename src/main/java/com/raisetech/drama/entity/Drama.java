@@ -1,6 +1,7 @@
 package com.raisetech.drama.entity;
 
 import com.raisetech.drama.dto.DramaDto;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Drama {
     @Setter(AccessLevel.NONE)
     private int id;
@@ -31,7 +33,8 @@ public class Drama {
         }
     }
 
-/*    @Override
+/*
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -49,5 +52,6 @@ public class Drama {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getTitle(), getYear(), getPriority());
-    }*/
+    }
+*/
 }
