@@ -31,7 +31,7 @@ public class Drama {
         }
     }
 
-    @Override
+/*    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -49,5 +49,5 @@ public class Drama {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getTitle(), getYear(), getPriority());
-    }
+    }*/
 }
