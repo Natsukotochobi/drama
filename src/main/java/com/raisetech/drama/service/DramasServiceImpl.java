@@ -7,11 +7,10 @@ import com.raisetech.drama.exception.ResourceNotFoundException;
 import com.raisetech.drama.mapper.DramasMapper;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-public class DramasServiceImpl implements DramasService{
+public class DramasServiceImpl implements DramasService {
     private DramasMapper dramasMapper;
 
     public DramasServiceImpl(DramasMapper dramasMapper) {
@@ -19,12 +18,13 @@ public class DramasServiceImpl implements DramasService{
     }
 
     @Override
-    public List<Drama> getDramas(String priority){
+    public List<Drama> getDramas(String priority) {
         List<Drama> dramas = dramasMapper.findByPriority(priority);
         return dramas.stream().toList();
     }
+
     @Override
-    public List<Drama> getAllDramas(){
+    public List<Drama> getAllDramas() {
         return dramasMapper.findAll().stream().toList();
     }
 
@@ -42,7 +42,7 @@ public class DramasServiceImpl implements DramasService{
     public Drama update(DramaDto dramaDto) {
         Drama drama = dramasMapper.findById(dramaDto.getId()).orElseThrow(() ->
                 new ResourceNotFoundException("id:" + dramaDto.getId() + "番のタイトルが見つかりません。"));
-       //DramaクラスのupdateDramaメソッドを呼び出し
+        //DramaクラスのupdateDramaメソッドを呼び出し
         drama.updateDrama(dramaDto);
         try {
             dramasMapper.update(drama);

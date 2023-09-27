@@ -2,7 +2,6 @@ package com.raisetech.drama.entity;
 
 import com.raisetech.drama.dto.DramaDto;
 import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DramaTest {
@@ -12,7 +11,7 @@ public class DramaTest {
         DramaDto dramaDto = new DramaDto("title2", "year2", "priority2");
         drama.updateDrama(dramaDto);
 
-        assertThat(drama).isEqualTo(new Drama(1, "title2", "year2", "priority2"));
+            assertThat(drama).isEqualTo(new Drama(1, "title2", "year2", "priority2"));
     }
 
     @Test

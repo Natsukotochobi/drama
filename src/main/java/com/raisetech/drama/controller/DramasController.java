@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
-
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -32,12 +29,14 @@ import java.util.List;
 public class DramasController {
     private final DramasService dramasService;
 
-    public DramasController(DramasService dramasService){
+    public DramasController(DramasService dramasService) {
         this.dramasService = dramasService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Drama>> getDramas(@Valid @PriorityValidation @RequestParam(value = "priority", required = false) String priority) {
+    public ResponseEntity<List<Drama>> getDramas(
+        @Valid @PriorityValidation @RequestParam(value = "priority", required = false)
+        String priority) {
         List<Drama> dramas;
         if (priority != null) {
             dramas = dramasService.getDramas(priority);

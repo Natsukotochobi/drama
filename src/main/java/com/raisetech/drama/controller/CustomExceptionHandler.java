@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = ResourceNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNoResourceFound(
@@ -57,8 +56,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResponseEntity<Map<String, Object>> handleConstraintViolationException(ConstraintViolationException ex) {
-
+    public ResponseEntity<Map<String, Object>> handleConstraintViolationException(
+        ConstraintViolationException ex) {
         var violations = ex.getConstraintViolations();
         List<Map<String, String>> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : violations) {
